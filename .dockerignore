@@ -1,3 +1,6 @@
+# Exclude all files with the .md extension (like README.md)
+*.md
+
 # Exclude specific directories
 .idea/
 .git/
