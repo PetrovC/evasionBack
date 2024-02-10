@@ -7,6 +7,4 @@ func main() {
 	fmt.Println(arr)
 	fmt.Println(arr)
 	fmt.Println(arr)
-	fmt.Println(arr)
-	fmt.Println(arr)
 }
