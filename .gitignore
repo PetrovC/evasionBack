@@ -34,3 +34,5 @@ node_modules/
 *.pb
 *.bat
 
+/ngrok.exe
+/Ngrok/
