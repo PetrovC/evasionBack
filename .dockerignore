@@ -2,8 +2,8 @@
 *.md
 
 # Exclude specific directories
-.idea/
-.git/
+idea/
+git/
 vendor/
 
 # Exclude specific files
