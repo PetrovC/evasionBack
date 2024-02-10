@@ -1,4 +1,4 @@
-FROM golang:1.21.6 AS build
+FROM golang:1.23 AS build
 
 # Move current project to a valid go path
 WORKDIR /app
