@@ -31,4 +31,5 @@ node_modules/
 *.so
 *.a
 *.out
+*.pb
 
