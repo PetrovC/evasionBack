@@ -1,22 +1,30 @@
-FROM golang:latest AS build
+# Non-root user setup
+USER nonroot
+
+FROM golang:1.21.6 AS build
 
 # Move current project to a valid go path
-COPY . /evasion
-WORKDIR /evasion
+WORKDIR /app
 
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files have not changed
+# Download Go modules
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Install Revel CLI
-RUN go get github.com/revel/cmd/revel
+# https://docs.docker.com/engine/reference/builder/#copy
+# Ensure you have a .dockerignore file to exclude sensitive files/directories
+COPY . /app
 
-# Install Revel CLI using go install (replace the version with the one you need)
-RUN go install github.com/revel/cmd/revel@latest
+# Build
+RUN CGO_ENABLED=0 GOOS=linux go build -o myapp .
 
-# Ensure $GOPATH/bin is in your path for the Revel CLI to be found
-ENV PATH="${PATH}:/root/go/bin"
+# Final stage: Use a distroless image for running the app
+FROM gcr.io/distroless/base-debian10
 
-# Run app in production mode
-EXPOSE 9000
-ENTRYPOINT revel run -a . /evasion
+# Copy the binary from the build stage
+COPY --from=build /app/myapp /app/myapp
 
+
+
+# Run app
+EXPOSE 8080
+ENTRYPOINT ["/app/myapp"]
