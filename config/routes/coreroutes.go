@@ -6,5 +6,7 @@ import (
 )
 
 func AddCoreRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("/api/Authenticate", handlers.Authenticate)
+	mux.HandleFunc("/users/login", handlers.UserLogin)
+	mux.HandleFunc("/users/signup", handlers.UserSignup)
+	mux.HandleFunc("/api/healthcheck", handlers.HealthCheck)
 }
